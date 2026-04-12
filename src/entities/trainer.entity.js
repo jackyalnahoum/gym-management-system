@@ -1,3 +1,7 @@
+/**
+ * Trainer entity - represents the trainer row from the database.
+ * Uses DB column names (snake_case).
+ */
 class TrainerEntity {
   constructor(trainer_id, full_name, specialization, phone, experience) {
     this.trainer_id = trainer_id;

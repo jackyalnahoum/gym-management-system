@@ -1,4 +1,5 @@
 const TrainerService = require("../services/trainer.service");
+const { handleError } = require("../utils/errorHandler");
 
 class TrainerController {
 
@@ -6,8 +7,8 @@ class TrainerController {
     try {
       const trainers = await TrainerService.getAllTrainers();
       res.json(trainers);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+        return handleError(res, err);
     }
   }
 
@@ -15,8 +16,8 @@ class TrainerController {
     try {
       const trainer = await TrainerService.getTrainerById(req.params.trainer_id);
       res.json(trainer);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+       return handleError(res, err);
     }
   }
 
@@ -24,8 +25,8 @@ class TrainerController {
     try {
       const trainer = await TrainerService.createTrainer(req.body);
       res.status(201).json(trainer);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -36,17 +37,16 @@ class TrainerController {
         req.body
       );
       res.json(trainer);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+    } catch (err) {
+       return handleError(res, err);    }
   }
 
   static async deleteTrainer(req, res) {
     try {
       const result = await TrainerService.deleteTrainer(req.params.trainer_id);
       res.json(result);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 }

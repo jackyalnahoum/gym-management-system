@@ -10,11 +10,9 @@ class MemberService {
 
   static async getMemberById(member_id) {
     const entity = await MemberRepository.findById(member_id);
-
     if (!entity) {
       throw new Error("Member not found");
     }
-
     return MemberDto.toResponseDto(entity);
   }
 
@@ -23,17 +21,14 @@ class MemberService {
   if (!body.full_name || !body.email) {
       throw new Error("Name and email are required");
     }
-
     const data = MemberDto.fromCreateRequest(body);
     const entity = await MemberRepository.create(data);
-
     return MemberDto.toResponseDto(entity);
   }
  
 
  static async updateMember(body) {
   const data = MemberDto.fromUpdateRequest(body);
-
   const updated = await MemberRepository.update({
     member_id: id,
     ...data
@@ -42,12 +37,10 @@ class MemberService {
     if (!updated) {
       throw new Error("Member not found");
     }
-
     return MemberDto.toResponseDto(updated);
-    }
+ }
 
     
-
  static async deleteMember(member_id) {
   const existing = await MemberRepository.findById(member_id);
 

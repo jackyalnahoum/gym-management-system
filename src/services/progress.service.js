@@ -28,11 +28,8 @@ class ProgressService {
     if (!member_id) {
       throw new Error("member_id is required");
     }
-
     const data = ProgressDto.fromCreateRequest(body);
-
     const entity = await ProgressRepository.create(data);
-
     return ProgressDto.toResponseDto(entity);
   }
 

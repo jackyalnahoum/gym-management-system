@@ -1,3 +1,7 @@
+/**
+ * Trainer Rating entity - represents the trainer rating row from the database.
+ * Uses DB column names (snake_case).
+ */
 class TrainerRatingEntity {
   constructor(id, member_id, trainer_id, rating, feedback) {
     this.id = id;

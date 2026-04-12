@@ -1,4 +1,5 @@
 const ProgressService = require("../services/progress.service");
+const { handleError } = require("../utils/errorHandler");
 
 class ProgressController {
 
@@ -6,8 +7,8 @@ class ProgressController {
     try {
       const progress = await ProgressService.getAllProgress();
       res.json(progress);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -15,8 +16,8 @@ class ProgressController {
     try {
       const progress = await ProgressService.getProgressById(req.params.progress_id);
       res.json(progress);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -24,8 +25,8 @@ class ProgressController {
     try {
       const progress = await ProgressService.createProgress(req.body);
       res.status(201).json(progress);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -36,8 +37,8 @@ class ProgressController {
         req.body
       );
       res.json(progress);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -45,8 +46,8 @@ class ProgressController {
     try {
       await ProgressService.deleteProgress(req.params.progress_id);
       res.json({ message: "Progress deleted successfully" });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 }

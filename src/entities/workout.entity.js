@@ -1,3 +1,7 @@
+/**
+ * Workout entity - represents the workout row from the database.
+ * Uses DB column names (snake_case).
+ */
 class WorkoutEntity {
   constructor(workout_id, title, description, trainer_id) {
     this.workout_id = workout_id;

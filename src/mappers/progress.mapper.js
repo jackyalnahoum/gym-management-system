@@ -56,3 +56,10 @@ function updateRequestToData(body) {
         recorded_at: body.recorded_at,
     };
 }
+
+module.exports = {
+    entityToResponseDto,
+    entitiesToListDto,
+    createRequestToData,
+    updateRequestToData
+}

@@ -1,4 +1,5 @@
 const SubscriptionService = require("../services/subscription.service");
+const { handleError } = require("../utils/errorHandler");
 
 class SubscriptionController {
 
@@ -6,8 +7,8 @@ class SubscriptionController {
     try {
       const subscriptions = await SubscriptionService.getAllSubscriptions();
       res.json(subscriptions);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+        return handleError(res, err);
     }
   }
 
@@ -15,8 +16,8 @@ class SubscriptionController {
     try {
       const subscription = await SubscriptionService.getSubscriptionById(req.params.subscription_id);
       res.json(subscription);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+        return handleError(res, err);
     }
   }
 
@@ -24,8 +25,8 @@ class SubscriptionController {
     try {
       const subscription = await SubscriptionService.createSubscription(req.body);
       res.status(201).json(subscription);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+        return handleError(res, err);
     }
   }
 
@@ -36,8 +37,8 @@ class SubscriptionController {
         req.body
       );
       res.json(subscription);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+        return handleError(res, err);
     }
   }
 
@@ -45,8 +46,8 @@ class SubscriptionController {
     try {
       await SubscriptionService.deleteSubscription(req.params.subscription_id);
       res.json({ message: "Subscription deleted successfully" });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+        return handleError(res, err);
     }
   }
 }

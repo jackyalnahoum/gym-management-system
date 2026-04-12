@@ -1,3 +1,7 @@
+/**
+ * Progress entity - represents the progress row from the database.
+ * Uses DB column names (snake_case).
+ */
 class ProgressEntity {
   constructor(progress_id, member_id, weight, notes, recorded_at) {
     this.progress_id = progress_id;

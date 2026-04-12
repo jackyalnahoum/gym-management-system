@@ -1,3 +1,7 @@
+/**
+ * Subscription entity - represents the subscription row from the database.
+ * Uses DB column names (snake_case).
+ */
 class SubscriptionEntity {
   constructor(subscription_id, member_id, workout_id, start_date, end_date, status) {
     this.subscription_id = subscription_id;

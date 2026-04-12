@@ -1,4 +1,5 @@
 const AuthService = require("../services/auth.service");
+const { handleError } = require("../utils/errorHandler");
 
 class AuthController {
   static async login(req, res) {
@@ -9,7 +10,7 @@ class AuthController {
 
       res.json(result);
     } catch (err) {
-      res.status(401).json({ error: err.message });
+       return handleError(res, err);
     }
   }
 }

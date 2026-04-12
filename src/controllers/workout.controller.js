@@ -1,4 +1,5 @@
 const WorkoutService = require("../services/workout.service");
+const { handleError } = require("../utils/errorHandler");
 
 class WorkoutController {
 
@@ -6,8 +7,8 @@ class WorkoutController {
     try {
       const workouts = await WorkoutService.getAllWorkouts();
       res.json(workouts);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -15,8 +16,8 @@ class WorkoutController {
     try {
       const workout = await WorkoutService.getWorkoutById(req.params.workout_id);
       res.json(workout);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -24,8 +25,8 @@ class WorkoutController {
     try {
       const workout = await WorkoutService.createWorkout(req.body);
       res.status(201).json(workout);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -36,8 +37,8 @@ class WorkoutController {
         req.body
       );
       res.json(workout);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 
@@ -45,8 +46,8 @@ class WorkoutController {
     try {
       await WorkoutService.deleteWorkout(req.params.workout_id);
       res.json({ message: "Workout deleted successfully" });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      return handleError(res, err);
     }
   }
 }

@@ -1,3 +1,7 @@
+/**
+ * Progress DTOs – API contract (camelCase response/request shapes).
+ * All entity ↔ DTO conversion is done in the progress mapper.
+ */
 const ProgressMapper = require("../mappers/progress.mapper");
 
 module.exports = {
