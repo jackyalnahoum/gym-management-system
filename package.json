@@ -1,0 +1,35 @@
+{
+  "name": "gym-management-system",
+  "version": "1.0.0",
+  "description": "CSIS 228 Web Development Project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackyalnahoum/gym-management-system.git"
+  },
+  "keywords": [
+    "CRUD",
+    "express",
+    "nodejs",
+    "postgres"
+  ],
+  "author": "Jacky AL Nahoum",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jackyalnahoum/gym-management-system/issues"
+  },
+  "homepage": "https://github.com/jackyalnahoum/gym-management-system#readme",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.20.0"
+  }
+}
