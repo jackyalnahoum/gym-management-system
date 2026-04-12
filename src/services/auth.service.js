@@ -1,6 +1,7 @@
 
 const { generateToken } = require("../utils/token");
 const { resolvePermissionsForRoles } = require("../auth/roleManager");
+const MemberRepository = require("../repositories/member.repository");
 
 class AuthService {
   static async login(email, password) {

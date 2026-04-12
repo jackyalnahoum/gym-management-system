@@ -13,7 +13,7 @@ const subscriptionRoutes = require("./routes/subscription.routes");
 app.use("/subscription", subscriptionRoutes);
 
 const workoutRoutes = require("./routes/workout.routes");
-app.use("/workout", workoutRoutes);
+app.use("/workout_plan", workoutRoutes);
 
 const progressRoutes = require("./routes/progress.routes");
 app.use("/progress", progressRoutes);
