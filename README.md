@@ -14,15 +14,18 @@ This project uses three simple patterns to protect routes and return consistent 
 - `src/middleware/auth.middleware.js`
 - `src/routes/auth.routes.js`
 - `src/services/auth.service.js`
-- `src/validators/client.validator.js`
+- `src/validators/trainer.validator.js`
 - `src/validators/member.validator.js`
 - `src/validators/progress.validator.js`
+- `src/validators/trainer_rating.validator.js`
 - `src/validators/subscription.validator.js`
-- `src/routes/client.routes.js`
+- `src/validators/workout_plan.validator.js`
 - `src/routes/member.routes.js`
+- `src/routes/trainer.routes.js`
 - `src/routes/progress.routes.js`
 - `src/routes/subscription.routes.js`
-- `src/routes/department.routes.js`
+- `src/routes/trainer_rating.routes.js`
+- `src/routes/workout_plan.routes.js`
 - `src/app.js`
 
 ---
