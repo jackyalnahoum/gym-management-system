@@ -27,7 +27,7 @@ router.post("/",
 );
 
 router.put("/:workout_id",
-  requirePermissions([Permissions.WORKOUT_PLAN_READ]),
+  requirePermissions([Permissions.WORKOUT_PLAN_WRITE]),
   WorkoutController.updateWorkout
 );
 

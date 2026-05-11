@@ -28,19 +28,20 @@ class TrainerService {
     return TrainerDto.toResponseDto(entity);
   }
 
-  static async updateTrainer(trainer_id, body) {
-    if (!trainer_id) {
-      throw new Error("ID is required");
+  static async updateTrainer(data) {
+    if (!data.trainer_id) {
+        throw new Error("ID is required");
     }
 
-    const data = TrainerDto.fromUpdateRequest(body);
+    const mappedData = TrainerDto.fromUpdateRequest(data);
+
     const entity = await TrainerRepository.update({
-      trainer_id: trainer_id,
-      ...data
+        trainer_id: data.trainer_id,
+        ...mappedData
     });
 
     if (!entity) {
-      throw new Error("Trainer not found");
+        throw new Error("Trainer not found");
     }
 
     return TrainerDto.toResponseDto(entity);

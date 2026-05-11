@@ -28,16 +28,29 @@ class TrainerRepository {
         return TrainerEntity.fromRow(result.rows[0]);
     }
 
-    static async update(trainer_id, { full_name, specialization, phone, experience }) {
-        const result = await pool.query(
-            `UPDATE trainer
-             SET full_name = $1, specialty = $2, phone = $3, experience = $4
-             WHERE trainer_id = $5
-             RETURNING *`,
-            [full_name, specialization, phone, experience, trainer_id]
-        );
-        return TrainerEntity.fromRow(result.rows[0]);
-    }
+    static async update(trainer) {
+
+    const {
+        trainer_id,
+        full_name,
+        specialization,
+        phone,
+        experience
+    } = trainer;
+
+    const result = await pool.query(
+        `UPDATE trainer
+         SET full_name = $1,
+             specialization = $2,
+             phone = $3,
+             experience = $4
+         WHERE trainer_id = $5
+         RETURNING *`,
+        [full_name, specialization, phone, experience, trainer_id]
+    );
+
+    return TrainerEntity.fromRow(result.rows[0]);
+}
 
     static async delete(trainer_id) {
         await pool.query(

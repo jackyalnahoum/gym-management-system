@@ -30,7 +30,7 @@ class MemberService {
  static async updateMember(body) {
   const data = MemberDto.fromUpdateRequest(body);
   const updated = await MemberRepository.update({
-    member_id: id,
+    member_id: body, //chnaged
     ...data
   });
 

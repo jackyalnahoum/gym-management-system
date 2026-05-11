@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+
+    <style>
+
+        :root{
+            --bg:#0b0b0c;
+            --panel:#151517;
+            --gold:#d4a017;
+            --gold-soft:#f6d878;
+            --text:#f5f5f5;
+            --muted:#9ca3af;
+            --border:#2a2a2f;
+            --danger:#ef4444;
+        }
+
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+        body{
+            background:
+                radial-gradient(circle at top right, rgba(212,160,23,0.12), transparent 20%),
+                #0b0b0c;
+
+            color:var(--text);
+            font-family:"Segoe UI", sans-serif;
+        }
+
+        main{
+            max-width:1300px;
+            margin:auto;
+            padding:40px 24px 80px;
+        }
+
+        header{
+            display:flex;
+            justify-content:space-between;
+            align-items:end;
+            margin-bottom:28px;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+
+        h1{
+            font-size:3rem;
+            margin-top:10px;
+        }
+
+        a{
+            text-decoration:none;
+            color:var(--gold-soft);
+            font-weight:700;
+        }
+
+        .layout{
+            display:grid;
+            grid-template-columns:340px 1fr;
+            gap:24px;
+        }
+
+        .panel{
+            background:linear-gradient(145deg,#171719,#111113);
+            border:1px solid var(--border);
+            border-radius:24px;
+            padding:28px;
+        }
+
+        .panel h2{
+            margin-bottom:10px;
+            color:var(--gold-soft);
+        }
+
+        .muted{
+            color:var(--muted);
+            line-height:1.7;
+        }
+
+        form{
+            margin-top:22px;
+        }
+
+        input, textarea{
+            width:100%;
+            margin-bottom:14px;
+            padding:14px;
+            border-radius:14px;
+            border:1px solid var(--border);
+            background:#0f0f11;
+            color:white;
+            font-size:0.95rem;
+        }
+
+        textarea{
+            resize:none;
+            min-height:90px;
+        }
+
+        button{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:14px;
+            background:var(--gold);
+            color:black;
+            font-weight:800;
+            cursor:pointer;
+            transition:0.25s;
+        }
+
+        button:hover{
+            transform:translateY(-2px);
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            overflow:hidden;
+            border-radius:20px;
+            background:linear-gradient(145deg,#171719,#111113);
+            border:1px solid var(--border);
+        }
+
+        th{
+            background:#1b1b1f;
+            color:var(--gold-soft);
+            text-align:left;
+            padding:18px;
+        }
+
+        td{
+            padding:18px;
+            border-top:1px solid rgba(255,255,255,0.05);
+        }
+
+        .rating{
+            color:var(--gold-soft);
+            font-weight:800;
+            font-size:1.1rem;
+        }
+
+        .danger{
+            background:var(--danger);
+            color:white;
+        }
+
+        .empty{
+            padding:40px;
+            text-align:center;
+            border-radius:20px;
+            background:linear-gradient(145deg,#171719,#111113);
+            border:1px solid var(--border);
+            color:var(--muted);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<main>
+
+<header>
+
+    <div>
+        <a href="/">← Back to dashboard</a>
+        <h1>Trainer Ratings</h1>
+    </div>
+
+    <p class="muted">
+        Evaluate trainer performance and member satisfaction.
+    </p>
+
+</header>
+
+<section class="layout">
+
+    <!-- CREATE -->
+
+    <aside class="panel">
+
+        <h2>Add Rating</h2>
+
+        <p class="muted">
+            Record trainer reviews and feedback from members.
+        </p>
+
+        <form method="post" action="/views/ratings">
+
+            <input
+                type="number"
+                name="member_id"
+                placeholder="Member ID"
+                required
+            />
+
+            <input
+                type="number"
+                name="trainer_id"
+                placeholder="Trainer ID"
+                required
+            />
+
+            <input
+                type="number"
+                name="rating"
+                min="1"
+                max="5"
+                placeholder="Rating (1-5)"
+                required
+            />
+
+            <textarea
+                name="feedback"
+                placeholder="Feedback..."
+            ></textarea>
+
+            <button type="submit">
+                Save Rating
+            </button>
+
+        </form>
+
+    </aside>
+
+    <!-- TABLE -->
+
+    <section>
+
+    <% if (!ratings.length) { %>
+
+        <div class="empty">
+            No ratings found.
+        </div>
+
+    <% } else { %>
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Member</th>
+                    <th>Trainer</th>
+                    <th>Rating</th>
+                    <th>Feedback</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            <% ratings.forEach(r => { %>
+
+                <tr>
+
+                    <td><%= r.id.id %></td>
+
+                    <td>#<%= r.id.member_id %></td>
+
+                    <td>#<%= r.id.trainer_id %></td>
+
+                    <td class="rating">
+                        ⭐ <%= r.id.rating %>
+                    </td>
+
+                    <td>
+                        <%= r.id.feedback || "No feedback" %>
+                    </td>
+
+                    <td>
+
+                        <!-- UPDATE -->
+
+                        <form
+                            method="post"
+                            action="/views/ratings/<%= r.id.id %>/update"
+                        >
+
+                            <input
+                                type="number"
+                                name="rating"
+                                min="1"
+                                max="5"
+                                value="<%= r.id.rating %>"
+                                required
+                            />
+
+                            <textarea
+                                name="feedback"
+                            ><%= r.id.feedback %></textarea>
+
+                            <button type="submit">
+                                Update
+                            </button>
+
+                        </form>
+
+                        <br>
+
+                        <!-- DELETE -->
+
+                        <form
+                            method="post"
+                            action="/views/ratings/<%= r.id.id %>/delete"
+                        >
+
+                            <button
+                                type="submit"
+                                class="danger"
+                            >
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            <% }) %>
+
+            </tbody>
+
+        </table>
+
+    <% } %>
+
+    </section>
+
+</section>
+
+</main>
+
+</body>
+</html>

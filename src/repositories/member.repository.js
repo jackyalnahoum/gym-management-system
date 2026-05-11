@@ -48,7 +48,7 @@ static async delete(member_id) {
     'DELETE FROM member WHERE member_id = $1',
     [member_id]
   );
-    return { message: "Trainer deleted" };
+    return { message: "Member deleted" };
 }
 
 static async authenticate(email, password) {

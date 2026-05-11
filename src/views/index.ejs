@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+
+    <style>
+        :root{
+            --bg:#0b0b0c;
+            --panel:#151517;
+            --panel2:#1d1d20;
+            --gold:#d4a017;
+            --gold-soft:#f6d878;
+            --text:#f5f5f5;
+            --muted:#a1a1aa;
+            --border:#2c2c31;
+        }
+
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+        body{
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(212,160,23,0.18), transparent 25%),
+                radial-gradient(circle at bottom left, rgba(212,160,23,0.12), transparent 20%),
+                var(--bg);
+
+            color:var(--text);
+            min-height:100vh;
+        }
+
+        main{
+            max-width:1300px;
+            margin:auto;
+            padding:40px 24px 80px;
+        }
+
+        .hero{
+            background:linear-gradient(145deg,#171719,#101012);
+            border:1px solid var(--border);
+            border-radius:28px;
+            padding:50px;
+            box-shadow:
+                0 10px 40px rgba(0,0,0,0.5),
+                inset 0 0 0 1px rgba(255,255,255,0.03);
+
+            position:relative;
+            overflow:hidden;
+        }
+
+        .hero::before{
+            content:"";
+            position:absolute;
+            width:400px;
+            height:400px;
+            background:rgba(212,160,23,0.08);
+            border-radius:50%;
+            top:-150px;
+            right:-120px;
+            filter:blur(10px);
+        }
+
+        .badge{
+            display:inline-block;
+            padding:8px 16px;
+            border-radius:999px;
+            background:rgba(212,160,23,0.12);
+            border:1px solid rgba(212,160,23,0.3);
+            color:var(--gold-soft);
+            font-size:0.85rem;
+            letter-spacing:1px;
+            text-transform:uppercase;
+            margin-bottom:22px;
+        }
+
+        h1{
+            font-size:4rem;
+            line-height:1.1;
+            margin-bottom:18px;
+            max-width:700px;
+        }
+
+        .hero p{
+            color:var(--muted);
+            max-width:700px;
+            line-height:1.8;
+            font-size:1.05rem;
+        }
+
+        nav{
+            margin-top:40px;
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+            gap:20px;
+        }
+
+        nav a{
+            text-decoration:none;
+        }
+
+        .btn{
+            padding:14px 22px;
+            border-radius:14px;
+            font-weight:700;
+            transition:0.25s;
+        }
+
+        .primary{
+            background:var(--gold);
+            color:black;
+        }
+
+        .primary:hover{
+            transform:translateY(-2px);
+        }
+
+        .secondary{
+            border:1px solid var(--border);
+            color:white;
+            background:#1a1a1d;
+        }
+
+        .secondary:hover{
+            border-color:var(--gold);
+            color:var(--gold-soft);
+        }
+
+        .grid{
+            background:linear-gradient(145deg,#171719,#111113);
+            border:1px solid #2a2a2f;
+            border-radius:22px;
+            padding:28px;
+            text-decoration:none;
+            color:white;
+            transition:0.25s;
+        }
+
+        .card{
+            background:linear-gradient(145deg,#171719,#111113);
+            border:1px solid var(--border);
+            border-radius:24px;
+            padding:28px;
+
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-4px);
+            border-color:#d4a017;
+        }
+
+        .card-title{
+            color:var(--muted);
+            font-size:0.95rem;
+            margin-bottom:12px;
+        }
+
+        .metric{
+            font-size:2.7rem;
+            font-weight:800;
+            color:var(--gold-soft);
+        }
+
+        .bottom-section{
+            margin-top:40px;
+
+            display:grid;
+            grid-template-columns:2fr 1fr;
+            gap:24px;
+        }
+
+        .panel{
+            background:linear-gradient(145deg,#171719,#111113);
+            border:1px solid var(--border);
+            border-radius:24px;
+            padding:28px;
+        }
+
+        .panel h2{
+            color:#f6d878;
+            margin-bottom:12px;
+        }
+
+        .activity{
+            display:flex;
+            justify-content:space-between;
+            padding:16px 0;
+            border-bottom:1px solid rgba(255,255,255,0.06);
+            color:var(--muted);
+        }
+
+        .activity:last-child{
+            border-bottom:none;
+        }
+
+        .status{
+            color:#4ade80;
+            font-weight:700;
+        }
+
+        .error{
+            margin-top:20px;
+            background:#3a1212;
+            border:1px solid #7f1d1d;
+            padding:16px;
+            border-radius:14px;
+            color:#fecaca;
+        }
+
+        @media(max-width:900px){
+
+            h1{
+                font-size:2.7rem;
+            }
+
+            .bottom-section{
+                grid-template-columns:1fr;
+            }
+
+            .hero{
+                padding:35px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<main>
+
+    <section class="hero">
+
+        <span class="badge">Premium Fitness Platformt</span>
+
+        <h1>Elevate Strength Club</h1>
+
+        <p>
+            Manage members, trainers, subscriptions, workout plans,
+            progress tracking, and performance analytics from one premium platform.
+        </p>
+
+        <% if (error) { %>
+            <div class="error">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <nav>
+            <a href="/views/members" class="btn primary">
+                Members
+                <p>Manage gym members and profiles.</p>
+            </a>
+
+            <a href="/views/trainers" class="btn secondary">
+                Trainers
+                <p>View and manage fitness trainers.</p>
+            </a>
+
+            <a href="/views/workouts" class="btn secondary">
+                Workouts
+                <p>Track workout plans and sessions.</p>
+            </a>
+
+            <a href="/views/progress" class="btn secondary">
+                Progress
+                <p>Monitor member transformation progress.</p>
+            </a>
+
+            <a href="/views/ratings" class="btn secondary">
+                Ratings
+                <p>Trainer reviews and performance ratings.</p>
+            </a>
+
+            <a href="/views/subscriptions" class="btn secondary">
+                Subscriptions
+                <p>Manage memberships and active plans.</p>
+            </a>
+        </nav>
+
+    </section>
+
+    <section class="grid">
+
+        <article class="card">
+            <p class="card-title">Total Members</p>
+            <p class="metric"><%= summary.members %></p>
+        </article>
+
+        <article class="card">
+            <p class="card-title">Professional Trainers</p>
+            <p class="metric"><%= summary.trainers %></p>
+        </article>
+
+        <article class="card">
+            <p class="card-title">Workout Programs</p>
+            <p class="metric"><%= summary.workouts %></p>
+        </article>
+
+        <article class="card">
+            <p class="card-title">Trainer Rating</p>
+            <p class="metric"><%= summary.ratings %></p>
+        </article>
+
+        <article class="card">
+            <p class="card-title">Active Subscriptions</p>
+            <p class="metric"><%= summary.subscriptions %></p>
+        </article>
+
+        <article class="card">
+            <p class="card-title">Progress Records</p>
+            <p class="metric"><%= summary.progressRecords %></p>
+        </article>
+
+        <article class="card">
+            <p class="card-title">Average Rating</p>
+            <p class="metric"> <%= summary.avgRating %></p>
+        </article>
+
+    </section>
+
+    <section class="bottom-section">
+
+        <div class="panel">
+
+            <h2>Recent Activity</h2>
+
+            <div class="activity">
+                <span>New premium member joined</span>
+                <span class="status">Active</span>
+            </div>
+
+            <div class="activity">
+                <span>Workout plan updated</span>
+                <span class="status">Updated</span>
+            </div>
+
+            <div class="activity">
+                <span>Trainer rating received</span>
+                <span class="status">5★</span>
+            </div>
+
+            <div class="activity">
+                <span>Subscription renewed</span>
+                <span class="status">Renewed</span>
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <h2>System Overview</h2>
+
+            <p style="color:var(--muted); line-height:1.9;">
+                This gym management platform provides full control over members,
+                trainers, workouts, subscriptions, and fitness progress tracking
+                using a modern Node.js + PostgreSQL architecture.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

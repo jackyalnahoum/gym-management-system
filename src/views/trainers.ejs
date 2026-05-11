@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title><%= title %></title>
+
+<style>
+:root {
+    --bg: #0f172a;
+    --panel: #111827;
+    --card: #1f2937;
+    --accent: #d4af37; /* gold */
+    --text: #f9fafb;
+    --muted: #9ca3af;
+    --danger: #ef4444;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: var(--text);
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: var(--accent);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* CARD */
+.panel {
+    background: var(--panel);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+/* FORM */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    background: var(--card);
+    color: white;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.primary {
+    background: var(--accent);
+    color: black;
+}
+
+.secondary {
+    background: #3b82f6;
+    color: white;
+}
+
+.danger {
+    background: var(--danger);
+    color: white;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #374151;
+}
+
+th {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+</style>
+</head>
+
+<body>
+
+<main>
+
+<header>
+    <h1>🏋️ Trainers</h1>
+    <a href="/">← Dashboard</a>
+</header>
+
+<section class="panel">
+
+<h2>Add Trainer</h2>
+
+<form method="post" action="/views/trainers">
+    <input name="full_name" placeholder="Trainer Name" required />
+    <input name="specialization" placeholder="Specialization" />
+    <button class="primary">Add Trainer</button>
+</form>
+
+</section>
+
+<section class="panel">
+
+<h2>All Trainers</h2>
+
+<% if (!trainers.length) { %>
+    <p class="muted">No trainers yet</p>
+<% } %>
+
+<input
+    type="text"
+    id="searchInput"
+    placeholder="Search members..."
+    style="
+        width:100%;
+        padding:14px;
+        margin-bottom:20px;
+        border-radius:14px;
+        border:1px solid #2a2a2f;
+        background:#111113;
+        color:white;
+    "
+>
+
+<table>
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Specialization</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+<% trainers.forEach(t => { %>
+
+<tr>
+    <td><%= t.id.trainer_id %></td>
+    <td><%= t.id.full_name %></td>
+    <td><%= t.id.specialization %></td>
+
+    <td>
+
+        <!-- UPDATE -->
+        <form method="post" action="/views/trainers/<%= t.id.trainer_id %>/update">
+            <input name="full_name" value="<%= t.id.full_name %>" required />
+            <input name="specialization" value="<%= t.id.specialization %>" />
+            <input name="experience" value="<%= t.id.experience %>" />
+            <input name="phone" value="<%= t.id.phone %>" />
+            <button class="secondary">Update</button>
+        </form>
+
+        <!-- DELETE -->
+        <form method="post" action="/views/trainers/<%= t.id.trainer_id %>/delete">
+            <button class="danger">Delete</button>
+        </form>
+
+    </td>
+</tr>
+
+<% }) %>
+
+    <script>
+
+const searchInput =
+    document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function () {
+
+    const value =
+        this.value.toLowerCase();
+
+    const rows =
+        document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+
+        row.style.display =
+            row.innerText
+                .toLowerCase()
+                .includes(value)
+                    ? ""
+                    : "none";
+    });
+
+});
+
+</script>
+
+
+</tbody>
+
+</table>
+
+</section>
+
+</main>
+
+</body>
+</html>

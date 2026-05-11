@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <style>
+        body{
+            background:#0b0b0c;
+            color:white;
+            font-family:Segoe UI,sans-serif;
+            padding:40px;
+        }
+
+        h1{
+            color:#f6d878;
+            margin-bottom:25px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:#151517;
+            border-radius:20px;
+            overflow:hidden;
+        }
+
+        th, td{
+            padding:18px;
+            border-bottom:1px solid #2a2a2f;
+            text-align:left;
+        }
+
+        th{
+            background:#1d1d20;
+            color:#f6d878;
+        }
+
+        tr:hover{
+            background:#1a1a1d;
+        }
+
+        .status{
+            color:#4ade80;
+            font-weight:700;
+        }
+
+        a{
+            color:#f6d878;
+            text-decoration:none;
+        }
+    </style>
+</head>
+
+<body>
+
+<a href="/">← Back to Dashboard</a>
+
+<h1>Subscriptions</h1>
+
+<br><br>
+
+<form
+    method="post"
+    action="/views/subscriptions"
+    style="
+        background:#151517;
+        padding:25px;
+        border-radius:20px;
+        margin-bottom:30px;
+    "
+>
+
+    <h2 style="margin-bottom:20px;color:#f6d878;">
+        Add Subscription
+    </h2>
+
+    <input
+        type="number"
+        name="member_id"
+        placeholder="Member ID"
+        required
+        style="width:100%;padding:12px;margin-bottom:12px;"
+    />
+
+    <input
+        type="number"
+        name="workout_id"
+        placeholder="Workout ID"
+        required
+        style="width:100%;padding:12px;margin-bottom:12px;"
+    />
+
+    <input
+        type="date"
+        name="start_day"
+        required
+        style="width:100%;padding:12px;margin-bottom:12px;"
+    />
+
+    <input
+        type="date"
+        name="end_day"
+        required
+        style="width:100%;padding:12px;margin-bottom:12px;"
+    />
+
+    <input
+        type="text"
+        name="status"
+        placeholder="Status"
+        required
+        style="width:100%;padding:12px;margin-bottom:18px;"
+    />
+
+    <button
+        type="submit"
+        style="
+            background:#d4a017;
+            color:black;
+            border:none;
+            padding:14px 20px;
+            border-radius:12px;
+            font-weight:bold;
+            cursor:pointer;
+        "
+    >
+        Add Subscription
+    </button>
+
+</form>
+
+<input
+    type="text"
+    id="searchInput"
+    placeholder="Search members..."
+    style="
+        width:100%;
+        padding:14px;
+        margin-bottom:20px;
+        border-radius:14px;
+        border:1px solid #2a2a2f;
+        background:#111113;
+        color:white;
+    "
+>
+
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Member ID</th>
+            <th>Workout ID</th>
+            <th>Start Day</th>
+            <th>End Day</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    <% subscriptions.forEach(s => { %>
+
+        <tr>
+
+            <td><%= s.subscription_id %></td>
+
+            <td><%= s.member_id %></td>
+
+            <td><%= s.workout_id %></td>
+
+            <td><%= s.start_day %></td>
+
+            <td><%= s.end_day %></td>
+
+            <td class="status">
+                <%= s.status %>
+            </td>
+            
+            <td>
+
+    <form
+        method="post"
+        action="/views/subscriptions/<%= s.subscription_id %>/delete"
+    >
+
+        <button
+            type="submit"
+            style="
+                background:#ef4444;
+                color:white;
+                border:none;
+                padding:10px 14px;
+                border-radius:10px;
+                cursor:pointer;
+            "
+        >
+            Delete
+        </button>
+
+    </form>
+
+</td>
+
+        </tr>
+
+    <% }) %>
+
+    <script>
+
+const searchInput =
+    document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function () {
+
+    const value =
+        this.value.toLowerCase();
+
+    const rows =
+        document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+
+        row.style.display =
+            row.innerText
+                .toLowerCase()
+                .includes(value)
+                    ? ""
+                    : "none";
+    });
+
+});
+
+</script>
+
+
+
+    </tbody>
+
+</table>
+
+</body>
+</html>

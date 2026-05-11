@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title><%= title %></title>
+
+<style>
+:root {
+    --bg: #0b1120;
+    --panel: #111827;
+    --card: #1f2937;
+    --accent: #d4af37;
+    --text: #f9fafb;
+    --muted: #9ca3af;
+    --danger: #ef4444;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    color: var(--text);
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: var(--accent);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.panel {
+    background: var(--panel);
+    padding: 24px;
+    border-radius: 18px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    background: var(--card);
+    color: white;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.primary {
+    background: var(--accent);
+    color: black;
+}
+
+.secondary {
+    background: #3b82f6;
+    color: white;
+}
+
+.danger {
+    background: var(--danger);
+    color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #374151;
+}
+
+th {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+</style>
+</head>
+
+<body>
+
+<main>
+
+<header>
+    <h1>🔥 Workouts</h1>
+    <a href="/">← Dashboard</a>
+</header>
+
+<!-- CREATE -->
+<section class="panel">
+
+<h2>Create Workout</h2>
+
+<form method="post" action="/views/workouts">
+
+    <input
+        type="text"
+        name="title"
+        placeholder="Workout Name"
+        required
+    />
+    
+    <textarea
+        name="description"
+        placeholder="Description"
+    ></textarea>
+
+
+    <input
+        type="number"
+        name="trainer_id"
+        placeholder="Difficulty"
+    />
+
+    <button type="submit">
+        Create Workout
+    </button>
+
+</form>
+
+</section>
+
+<!-- TABLE -->
+<section class="panel">
+
+<h2>All Workouts</h2>
+
+<% if (!workouts.length) { %>
+
+    <p>No workouts found</p>
+
+<% } else { %>
+
+<table>
+
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Difficulty</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<% workouts.forEach(w => { %>
+
+<tr>
+
+<td><%= w.workout_id %></td>
+
+<td><%= w.name %></td>
+
+<td><%= w.difficulty %></td>
+
+<td>
+
+    <!-- UPDATE -->
+    <form
+        method="post"
+        action="/views/workouts/<%= w.workout_id %>/update"
+    >
+
+        <input
+            type="text"
+            name="title"
+            value="<%= w.title %>"
+        />
+
+        <input
+            name="description"
+            value="<%= w.description %>"
+        />
+
+        <input
+            type="number"
+            name="trainer_id"
+            value="<%= w.difficulty %>"
+        />
+
+        <button class="secondary">
+            Update
+        </button>
+
+    </form>
+
+    <!-- DELETE -->
+    <form
+        method="post"
+        action="/views/workouts/<%= w.workout_id %>/delete"
+    >
+
+        <button class="danger">
+            Delete
+        </button>
+
+    </form>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+<% } %>
+
+</section>
+
+</main>
+
+</body>
+</html>
