@@ -52,6 +52,17 @@ class ViewController {
                   ).toFixed(1)
                 : 0;
 
+        // API QUOTE
+        
+        const quoteRes =
+            await fetch("https://zenquotes.io/api/random");
+
+        const quoteData =
+            await quoteRes.json();
+
+        const quote =
+            quoteData[0].q;
+
         return res.render("index", {
 
             title: "Elite Fitness Club Dashboard",
@@ -65,6 +76,8 @@ class ViewController {
                 progressRecords: progress.length,
                 avgRating
             },
+
+            quote,
 
             error: null,
         });
@@ -85,9 +98,12 @@ class ViewController {
                 avgRating: 0
             },
 
+            quote: "Discipline builds strength.",
+
             error: err.message,
         });
     }
+   
 }
     
 
